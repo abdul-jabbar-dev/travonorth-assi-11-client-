@@ -8,18 +8,26 @@ const ManageAllPackege = () => {
         fetch(url)
             .then(res => res.json())
             .then(data => setUser(data))
-    }, [])
-    const people = [{
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-        image:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-        // More people...
-    ]
+    }, [user])
+
+    const deleteData = (person) => {
+        const sure = window.confirm(`Are You Sure? You Want to Delete ${person.title}`)
+        if (sure) {
+            console.log(person._id)
+            fetch(`https://travnorth.herokuapp.com/places/${person._id}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data === person._id) {
+                        const remaining = user.filter(find => find._id !== person._id)
+            
+                        setUser(remaining)
+                    }
+                })
+
+        }
+    }
     return (
         <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="flex flex-col">
@@ -90,9 +98,15 @@ const ManageAllPackege = () => {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{parseInt(person.hotelP) + parseInt(person.ticket)} </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                <Link to={`manage/${person._id}`} className="text-indigo-600 hover:text-indigo-900">
+                                                <Link to={`/preview/place/${person._id}`} className="text-indigo-600 hover:text-indigo-900">
                                                     Edit
                                                 </Link>
+                                            </td>
+
+                                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <button onClick={() => deleteData(person)} className="text-red-600 hover:text-red-900">
+                                                    Delete
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}

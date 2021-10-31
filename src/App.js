@@ -16,7 +16,6 @@ import ManageAPackege from "./Pages/ManageAPackege/ManageAPackege";
 import Notfound from "./Pages/notFound/Notfound";
 import Places from "./Pages/Places/Places";
 import Preview from "./Pages/Preview/Preview";
-import PrivateRoute from "./Pages/PrivetRoute/PrivateRoute";
 
 function App() {
   
@@ -31,13 +30,13 @@ function App() {
         <Route path='/home'>
           <Home></Home>
         </Route>
-        <Route path='/places'>
+        <Route exact path='/places'>
           <Places></Places>
         </Route>
         <Route path='/cart'>
           <Cart></Cart>
         </Route>
-        <Route path='/preview/:id'>
+        <Route exact path='/preview/:id'>
           <Preview></Preview>
         </Route>
         <Route path='/about'>
@@ -55,7 +54,7 @@ function App() {
         <Route path='/manageallpackege'>
           <ManageAllPackege></ManageAllPackege>
         </Route>
-        <Route path='/manage/:id'>
+        <Route path='/preview/place/:id'>
           <ManageAPackege></ManageAPackege>
         </Route>
         <Route path='*'>

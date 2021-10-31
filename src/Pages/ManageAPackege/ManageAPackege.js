@@ -4,35 +4,42 @@ import editIcon from '../media/icon/cogwheels.png'
 const ManageAPackege = () => {
     const { id } = useParams()
     const [user, setUser] = useState({})
-
-console.log(id)
-
     useEffect(() => {
         fetch(`https://travnorth.herokuapp.com/places/${id}`)
             .then(res => res.json())
             .then((data) => {
                 setUser(data)
             })
-    }, [])
+    }, [id])
     const chngData = e => {
         const updatedValue = e.target.value;
         const updatedName = e.target.name;
         const cUser = { ...user };
         cUser[updatedName] = updatedValue
         setUser(cUser)
-        console.log(e)
+        console.log(cUser)
     }
-    const onSubmit = () => {
-console.log(user)
+    const onSubmition = (e) => {
+        const data = {
+            title: user.title,
+            img: user.img,
+            discription: user.discription,
+            hotelP: user.hotelP,
+            ticket: user.ticket,
+            date: user.date
+
+        }
+
+
         fetch(`https://travnorth.herokuapp.com/places/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(data)
         }).then(res => res.json())
-            .then(data => console.log(data))
-
+            .then(data => alert('update complete'))
+        e.preventDefault()
     };
     return (
         <div>
@@ -42,7 +49,7 @@ console.log(user)
                     <img style={{ minWidth: '5%', margin: '0 auto' }} src={editIcon} alt="" />
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Modify your Package</h2>
 
-                    <form onSubmit={onSubmit} className="mt-8 space-y-6" method="POST">
+                    <form onSubmit={onSubmition} className="mt-8 space-y-6" >
                         <input type="hidden" name="remember" defaultValue="true" />
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div>
