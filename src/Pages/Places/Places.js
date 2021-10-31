@@ -10,7 +10,7 @@ const Places = () => {
             .then(res => res.json())
             .then(data => setUser(data))
     }, [])
-    console.log(user)
+
     return (
         <div>
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import {MenuIcon, XIcon } from '@heroicons/react/outline'
-import  {FaOpencart}  from 'react-icons/fa'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import { FaOpencart } from 'react-icons/fa'
 import { Link, NavLink } from 'react-router-dom';
 import headerIcon from '../media/icon/maps.png'
 import Auth from '../Auth/Firebase/Auth';
@@ -16,7 +16,7 @@ const Header = () => {
 
     return (
         <Disclosure as="nav" className="bg-blue-600">
-         
+
             {({ open }) => (
                 <>
                     <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -65,15 +65,12 @@ const Header = () => {
                             </div>
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 {/* Profile dropdown */}
-                     {
-                                    user.displayName ? <Link
-                                        to={'/cart'}
-                                        className="bg-blue-800 p-1 rounded-full text-blue-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-800 focus:ring-white"
-                                    >
-                                        <span className="sr-only">View notifications</span>
-                                        <FaOpencart className="h-6 w-6" aria-hidden="true" />
-                                    </Link>:null
-                     }
+                                {
+                                    user.displayName ?
+                                        <Link to={`/cart`} className="bg-blue-800 p-1 rounded-full text-blue-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-800 focus:ring-white">
+                                            p
+                                        </Link> : null
+                                }
                                 {
                                     user.displayName ? <Menu as="div" className="ml-3  relative">
                                         <div>
@@ -116,10 +113,10 @@ const Header = () => {
                                                 <Menu.Item>
                                                     {({ active }) => (
                                                         <Link
-                                                            to="#a"
+                                                            to="/manageallpackege"
                                                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                                         >
-                                                            Settings
+                                                            Manage All Packege
                                                         </Link>
                                                     )}
                                                 </Menu.Item>
@@ -153,14 +150,33 @@ const Header = () => {
                     </div>
 
                     <Disclosure.Panel className="sm:hidden">
-                        <div className="px-2 pt-2 pb-3 space-y-1">
+                        <div className="px-2 pt-2  space-y-1">
                             <Link to={'/home'} >
                                 <Disclosure.Button
                                     className={classNames(
-                                        'bg-blue-900 text-white'
-                                    )}
-                                >
-                                    ADD
+                                        ' text-blue-300 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
+                                    )}>
+                                    Home
+                                </Disclosure.Button>
+                            </Link>
+                        </div>
+                        <div className="px-2  space-y-1">
+                            <Link to={'/places'} >
+                                <Disclosure.Button
+                                    className={classNames(
+                                        ' text-blue-300 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
+                                    )}>
+                                    Places
+                                </Disclosure.Button>
+                            </Link>
+                        </div>
+                        <div className="px-2  pb-3 space-y-1">
+                            <Link to={'/about'} >
+                                <Disclosure.Button
+                                    className={classNames(
+                                        ' text-blue-300 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
+                                    )}>
+                                    About
                                 </Disclosure.Button>
                             </Link>
                         </div>

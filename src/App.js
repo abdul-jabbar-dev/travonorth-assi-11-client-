@@ -11,15 +11,19 @@ import Registration from "./Pages/Auth/Registration/Registration";
 import Cart from "./Pages/Cart/Cart";
 import Header from './Pages/Header/Header';
 import Home from './Pages/Home/Home';
+import ManageAllPackege from "./Pages/ManageAllPackege/ManageAllPackege";
+import ManageAPackege from "./Pages/ManageAPackege/ManageAPackege";
 import Notfound from "./Pages/notFound/Notfound";
 import Places from "./Pages/Places/Places";
 import Preview from "./Pages/Preview/Preview";
+import PrivateRoute from "./Pages/PrivetRoute/PrivateRoute";
 
 function App() {
+  
   return (
     <Router>
       <Header></Header>
-      
+
       <Switch>
         <Route exact path='/'>
           <Home></Home>
@@ -47,6 +51,12 @@ function App() {
         </Route>
         <Route path='/login'>
           <Login></Login>
+        </Route>
+        <Route path='/manageallpackege'>
+          <ManageAllPackege></ManageAllPackege>
+        </Route>
+        <Route path='/manage/:id'>
+          <ManageAPackege></ManageAPackege>
         </Route>
         <Route path='*'>
           <Notfound></Notfound>

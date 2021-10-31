@@ -1,41 +1,48 @@
-import React from 'react';
-import { useForm } from '../../../node_modules/react-hook-form/dist/index.cjs';
-import tourestImg from '../media/icon/island.png'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import editIcon from '../media/icon/cogwheels.png'
+const ManageAPackege = () => {
+    const { id } = useParams()
+    const [user, setUser] = useState({})
 
+console.log(id)
 
-
-const AddPlace = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
-        const doc = {
-            title: data.title,
-            img: data.img,
-            discription: data.discription,
-            hotelP: data.hotelP,
-            ticket: data.ticket,
-            date: data.date
-        }
-        console.log(data.img)
-        fetch('https://travnorth.herokuapp.com/places', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(doc)
+    useEffect(() => {
+        fetch(`https://travnorth.herokuapp.com/places/${id}`)
+            .then(res => res.json())
+            .then((data) => {
+                setUser(data)
             })
-                .then(res => res.json())
-                .then(data => alert('congres for added user'))
-        
+    }, [])
+    const chngData = e => {
+        const updatedValue = e.target.value;
+        const updatedName = e.target.name;
+        const cUser = { ...user };
+        cUser[updatedName] = updatedValue
+        setUser(cUser)
+        console.log(e)
+    }
+    const onSubmit = () => {
+console.log(user)
+        fetch(`https://travnorth.herokuapp.com/places/${id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }).then(res => res.json())
+            .then(data => console.log(data))
+
     };
     return (
         <div>
-    
+
             <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
-                    <img style={{ minWidth: '5%', margin: '0 auto' }} src={tourestImg} alt="" />
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Add your tourest Package</h2>
+                    <img style={{ minWidth: '5%', margin: '0 auto' }} src={editIcon} alt="" />
+                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Modify your Package</h2>
 
-                    <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6" method="POST">
+                    <form onSubmit={onSubmit} className="mt-8 space-y-6" method="POST">
                         <input type="hidden" name="remember" defaultValue="true" />
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div>
@@ -44,11 +51,13 @@ const AddPlace = () => {
                                 </label>
                                 <input
                                     name="title"
+                                    value={user.title || ''}
                                     type={'text'}
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                     placeholder="Package Title"
-                                    id="title" {...register('title')}
+                                    id="title"
+                                    onChange={chngData}
                                 />
                             </div>
                             <div>
@@ -56,12 +65,14 @@ const AddPlace = () => {
                                     Image URL
                                 </label>
                                 <input
-                                    name="tmg"
+                                    name="img"
+                                    value={user.img || ''}
                                     type={'text'}
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                     placeholder="Image URL"
-                                    id="tmg" {...register('img')}
+                                    id="img"
+                                    onChange={chngData}
                                 />
                             </div>
                             <div>
@@ -71,10 +82,12 @@ const AddPlace = () => {
                                 <input
                                     name="hotelP"
                                     type={'number'}
+                                    value={user.hotelP || ''}
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                     placeholder="Hotel Price"
-                                    id="hotelP" {...register('hotelP')}
+                                    id="hotelP"
+                                    onChange={chngData}
                                 />
                             </div>
                             <div>
@@ -83,11 +96,13 @@ const AddPlace = () => {
                                 </label>
                                 <input
                                     name="ticket"
+                                    value={user.ticket || ''}
                                     type={'number'}
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                     placeholder="Ticket Price"
-                                    id="ticket" {...register('ticket')}
+                                    id="ticket"
+                                    onChange={chngData}
                                 />
                             </div>
                             <div>
@@ -97,24 +112,28 @@ const AddPlace = () => {
                                 <input
                                     name="discription"
                                     type={'text'}
+                                    value={user.discription || ''}
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                     placeholder="Package discription"
-                                    id="discription" {...register('discription')}
+                                    id="discription"
+                                    onChange={chngData}
                                 />
                             </div>
                             <div>
                                 <label htmlFor="date" className="sr-only">
                                     Participant Date
                                 </label>
-
                                 <input
                                     name="date"
                                     type={'date'}
+                                    value={user.date || ''}
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                     placeholder="Participant Date"
-                                    id="date" {...register('date')}
+                                    id="date"
+                                    onChange={chngData}
+
                                 />
                             </div>
                         </div>
@@ -131,4 +150,4 @@ const AddPlace = () => {
     );
 };
 
-export default AddPlace;
+export default ManageAPackege;
