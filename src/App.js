@@ -8,15 +8,18 @@ import AboutUs from "./Pages/AboutUs/AboutUs";
 import AddPlace from "./Pages/AddPlace/AddPlace";
 import Login from "./Pages/Auth/Login/Login";
 import Registration from "./Pages/Auth/Registration/Registration";
+import Cart from "./Pages/Cart/Cart";
 import Header from './Pages/Header/Header';
 import Home from './Pages/Home/Home';
 import Notfound from "./Pages/notFound/Notfound";
 import Places from "./Pages/Places/Places";
+import Preview from "./Pages/Preview/Preview";
 
 function App() {
   return (
     <Router>
       <Header></Header>
+      
       <Switch>
         <Route exact path='/'>
           <Home></Home>
@@ -26,6 +29,12 @@ function App() {
         </Route>
         <Route path='/places'>
           <Places></Places>
+        </Route>
+        <Route path='/cart'>
+          <Cart></Cart>
+        </Route>
+        <Route path='/preview/:id'>
+          <Preview></Preview>
         </Route>
         <Route path='/about'>
           <AboutUs></AboutUs>

@@ -19,7 +19,7 @@ const PromoSec = () => {
                         It's not too early to get your vacation plans in place, and we've got some great offers for 2023 to tempt you. Book by September 1, 2022 and take advantage of our Early Booking Offers.
                     </p>
                     <Link
-                        to="/plan"
+                        to="/places"
                         className="my-2 inline-block text-center bg-indigo-600 border border-transparent rounded-md py-3 px-8 font-medium text-white hover:bg-indigo-700"
                     >
                         Find Tours

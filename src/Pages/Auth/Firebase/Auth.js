@@ -25,6 +25,8 @@ const Auth = () => {
             .then((result) => {
                 const user = result.user;
                 setUser(user)
+                alert('Registration successfully, Goto login ')
+
             }).catch((error) => {
             });
     }
@@ -36,6 +38,7 @@ const Auth = () => {
                     displayName: displayName
                 })
                     .then(() => {
+                        alert('Registration successfully, Goto login ')
                     })
                     .catch((error) => {
                     });

@@ -4,14 +4,22 @@ import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import Auth from '../Firebase/Auth'
 import { FcGoogle } from 'react-icons/fc';
+import { useHistory } from 'react-router-dom';
 // import { FcGoogle } from  "@react-icons/all-files/fa/FcGoogle";
 
 const Login = () => {
+    const history = useHistory()
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { loginByEmail, googleLogin } = Auth()
+    const { loginByEmail, googleLogin, user } = Auth()
+
+    if (user.displayName || user.email) {
+        history.push('/')
+    } else {
+
+    }
 
     const onSubmit = data => {
-        loginByEmail(data.email,data.password)
+        loginByEmail(data.email, data.password)
     };
     return (
         <div>

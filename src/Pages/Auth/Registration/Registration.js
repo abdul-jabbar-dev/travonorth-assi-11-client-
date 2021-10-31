@@ -7,14 +7,13 @@ import Auth from '../Firebase/Auth';
 
 const Registration = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createByEmail, user, googleLogin } = Auth()
+    const { createByEmail, googleLogin } = Auth()
 
     const onSubmit = data => {
         createByEmail(data.name, data.email, data.password)
     };
     return (
         <div>
-            <h3>{user?.email}</h3>
             <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
                     <div>

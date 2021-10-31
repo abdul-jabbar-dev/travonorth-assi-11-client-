@@ -14,6 +14,7 @@ const AddPlace = () => {
             ticket: data.ticket,
             date: data.date
         }
+        console.log(data.img)
         fetch('https://travnorth.herokuapp.com/places', {
                 method: 'POST',
                 headers: {
@@ -27,6 +28,7 @@ const AddPlace = () => {
     };
     return (
         <div>
+    
             <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
                     <img style={{ minWidth: '5%', margin: '0 auto' }} src={tourestImg} alt="" />
@@ -58,7 +60,7 @@ const AddPlace = () => {
                                     required
                                     className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                     placeholder="Image URL"
-                                    id="tmg" {...register('tmg')}
+                                    id="tmg" {...register('img')}
                                 />
                             </div>
                             <div>

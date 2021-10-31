@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import {MenuIcon, XIcon } from '@heroicons/react/outline'
+import  {FaOpencart}  from 'react-icons/fa'
 import { Link, NavLink } from 'react-router-dom';
 import headerIcon from '../media/icon/maps.png'
 import Auth from '../Auth/Firebase/Auth';
+import Cart from '../Cart/Cart';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 const Header = () => {
     const { signout, user } = Auth()
-    console.log(user.displayName)
+
     return (
         <Disclosure as="nav" className="bg-blue-600">
+         
             {({ open }) => (
                 <>
                     <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -56,23 +59,37 @@ const Header = () => {
                                         <NavLink to={'/about'} activeClassName='bg-blue-800 text-white' className='text-blue-300 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
                                             About
                                         </NavLink>
-                                        <NavLink to={'/addplace'} activeClassName='bg-blue-800 text-white' className='text-blue-300 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'>
-                                            Add places
-                                        </NavLink>
+
                                     </div>
                                 </div>
                             </div>
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 {/* Profile dropdown */}
+                     {
+                                    user.displayName ? <Link
+                                        to={'/cart'}
+                                        className="bg-blue-800 p-1 rounded-full text-blue-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-800 focus:ring-white"
+                                    >
+                                        <span className="sr-only">View notifications</span>
+                                        <FaOpencart className="h-6 w-6" aria-hidden="true" />
+                                    </Link>:null
+                     }
                                 {
-                                    user.displayName? <Menu as="div" className="ml-3  relative">
+                                    user.displayName ? <Menu as="div" className="ml-3  relative">
                                         <div>
                                             <Menu.Button className="bg-blue-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-800 focus:ring-white">
                                                 <span className="sr-only">Open user menu</span>
-                                                <div className="h-8 w-8 rounded-full overflow-hidden" >
-                                                    {
-                                                        user.photoURL ? <img src={user.photoURL} alt={user.displayName} /> : <img src={'https://i.ibb.co/34SnYf8/no-photo.png'} alt={user.displayName} a />
-                                                    }
+                                                <div className='flex items-center'>
+                                                    <div className="h-8 w-8 rounded-full overflow-hidden" >
+                                                        {
+                                                            user.photoURL ? <img src={user.photoURL} alt={user.displayName} /> : <img src={'https://i.ibb.co/34SnYf8/no-photo.png'} alt={user.displayName} a />
+                                                        }
+                                                    </div>
+                                                    <div className=" text-white rounded-full overflow-hidden" >
+                                                        {
+                                                            user.displayName
+                                                        }
+                                                    </div>
                                                 </div>
                                             </Menu.Button>
                                         </div>
@@ -89,10 +106,10 @@ const Header = () => {
                                                 <Menu.Item>
                                                     {({ active }) => (
                                                         <Link
-                                                            to="/home"
+                                                            to="/addplace"
                                                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                                         >
-                                                            Your Profile
+                                                            Add Tourest service
                                                         </Link>
                                                     )}
                                                 </Menu.Item>
