@@ -3,17 +3,18 @@ import { Link } from 'react-router-dom';
 
 const ManageAllPackege = () => {
     const [user, setUser] = useState([])
+    //get all  data
     useEffect(() => {
         const url = `https://travnorth.herokuapp.com/places`
         fetch(url)
             .then(res => res.json())
             .then(data => setUser(data))
     }, [user])
-
+    // delete a item 
     const deleteData = (person) => {
         const sure = window.confirm(`Are You Sure? You Want to Delete ${person.title}`)
         if (sure) {
-            console.log(person._id)
+
             fetch(`https://travnorth.herokuapp.com/places/${person._id}`, {
                 method: 'DELETE'
             })
@@ -21,13 +22,22 @@ const ManageAllPackege = () => {
                 .then(data => {
                     if (data === person._id) {
                         const remaining = user.filter(find => find._id !== person._id)
-            
                         setUser(remaining)
                     }
                 })
-
         }
     }
+    const loding = <div class="flex justify-center items-center">
+        <div
+            class="
+      animate-spin
+      rounded-full
+      h-32
+      w-32
+      border-t-2 border-b-2 border-purple-500
+    "
+        ></div>
+    </div>
     return (
         <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
             <div className="flex flex-col">
@@ -74,14 +84,15 @@ const ManageAllPackege = () => {
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
                                     {user.map((person) => (
-                                        <tr key={person._id}>
+
+                                        !person ? loding : <tr key={person._id}>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center">
                                                     <div className="flex-shrink-0 h-10 w-10">
                                                         <img className="h-10 w-10 rounded-full" src={person.img} alt="" />
                                                     </div>
                                                     <div className="ml-4">
-                                                        <div className="text-md font-medium text-gray-900">{(person.title).toUpperCase()}</div>
+                                                        <div className={`text-md font-medium text-gray-900`}>{(person.title).toUpperCase()}</div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -93,7 +104,7 @@ const ManageAllPackege = () => {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                    pending
+                                                    {person.edit ? "Edit & Pending" : 'Pending'}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{parseInt(person.hotelP) + parseInt(person.ticket)} </td>
@@ -109,6 +120,7 @@ const ManageAllPackege = () => {
                                                 </button>
                                             </td>
                                         </tr>
+
                                     ))}
                                 </tbody>
                             </table>

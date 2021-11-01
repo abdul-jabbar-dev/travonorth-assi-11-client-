@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import Auth from '../Auth/Firebase/Auth';
+import { UserContext } from '../../App';
 
 const PrivetRoute = ({ children, ...rest }) => {
-    let {user} = Auth();
-    console.log(user);
+    const user = useContext(UserContext)
     return (
-        <Route
+       <Route
             {...rest}
             render={({ location }) =>
-                user.displayName ? (
+                user.uid? (
                     children
                 ) : (
                     <Redirect
@@ -20,8 +19,8 @@ const PrivetRoute = ({ children, ...rest }) => {
                     />
                 )
             }
-        />
-    );
+  />
+    )
 };
 
 export default PrivetRoute;

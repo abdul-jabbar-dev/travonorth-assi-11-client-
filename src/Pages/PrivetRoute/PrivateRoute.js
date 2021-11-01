@@ -3,6 +3,7 @@ import Auth from "../Auth/Firebase/Auth";
 
 function PrivateRoute({ children, ...rest }) {
     let { user } = Auth();
+
     return (
         <Route
             {...rest}

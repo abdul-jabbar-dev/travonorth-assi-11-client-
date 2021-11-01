@@ -1,3 +1,4 @@
+import { createContext } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -6,6 +7,7 @@ import {
 import './App.css';
 import AboutUs from "./Pages/AboutUs/AboutUs";
 import AddPlace from "./Pages/AddPlace/AddPlace";
+import Auth from "./Pages/Auth/Firebase/Auth";
 import Login from "./Pages/Auth/Login/Login";
 import Registration from "./Pages/Auth/Registration/Registration";
 import Cart from "./Pages/Cart/Cart";
@@ -16,13 +18,16 @@ import ManageAPackege from "./Pages/ManageAPackege/ManageAPackege";
 import Notfound from "./Pages/notFound/Notfound";
 import Places from "./Pages/Places/Places";
 import Preview from "./Pages/Preview/Preview";
+import PrivetRoute from "./Pages/PrivetRoute/PrivetRoute";
+import Footer from './Pages/footer/Footer'
+export const UserContext = createContext(null);
 
 function App() {
-  
+  const { user } = Auth()
   return (
+    <UserContext.Provider value={user}>
     <Router>
       <Header></Header>
-
       <Switch>
         <Route exact path='/'>
           <Home></Home>
@@ -33,9 +38,9 @@ function App() {
         <Route exact path='/places'>
           <Places></Places>
         </Route>
-        <Route path='/cart'>
+        <PrivetRoute path='/cart'>
           <Cart></Cart>
-        </Route>
+        </PrivetRoute>
         <Route exact path='/preview/:id'>
           <Preview></Preview>
         </Route>
@@ -61,7 +66,11 @@ function App() {
           <Notfound></Notfound>
         </Route>
       </Switch>
+      <Footer></Footer>
     </Router>
+      </UserContext.Provider>
+
+
   );
 }
 

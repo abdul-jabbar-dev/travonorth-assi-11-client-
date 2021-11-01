@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import editIcon from '../media/icon/cogwheels.png'
+import { GrUpdate } from "react-icons/gr";
+import './manageAPackege.css'
+
 const ManageAPackege = () => {
     const { id } = useParams()
     const [user, setUser] = useState({})
@@ -17,7 +19,6 @@ const ManageAPackege = () => {
         const cUser = { ...user };
         cUser[updatedName] = updatedValue
         setUser(cUser)
-        console.log(cUser)
     }
     const onSubmition = (e) => {
         const data = {
@@ -26,11 +27,9 @@ const ManageAPackege = () => {
             discription: user.discription,
             hotelP: user.hotelP,
             ticket: user.ticket,
-            date: user.date
-
+            date: user.date,
+            edit: true,
         }
-
-
         fetch(`https://travnorth.herokuapp.com/places/${id}`, {
             method: 'PUT',
             headers: {
@@ -42,11 +41,10 @@ const ManageAPackege = () => {
         e.preventDefault()
     };
     return (
-        <div>
-
+        <div >
             <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
-                    <img style={{ minWidth: '5%', margin: '0 auto' }} src={editIcon} alt="" />
+                    <img style={{ minWidth: '2%', margin: '0 auto', }} className='rounded-full' src={user.img} alt="" />
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Modify your Package</h2>
 
                     <form onSubmit={onSubmition} className="mt-8 space-y-6" >
@@ -140,15 +138,13 @@ const ManageAPackege = () => {
                                     placeholder="Participant Date"
                                     id="date"
                                     onChange={chngData}
-
                                 />
                             </div>
                         </div>
-
                         <div>
-                            <input type="submit"
-                                className="mt-1 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            />
+                            <button type="submit"
+                                className="mt-1 group relative w-full items-center flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            ><GrUpdate style={{ marginRight: '10px' }} />  Update</button>
                         </div>
                     </form>
                 </div>

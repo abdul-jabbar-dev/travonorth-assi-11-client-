@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, signOut, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { init } from "./firebaseInit";
 
 
@@ -16,19 +16,13 @@ const Auth = () => {
                 setUser(user.user)
             })
             .catch((error) => {
-                console.dir(error)
+
             });
     }
 
     const googleLogin = () => {
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const user = result.user;
-                setUser(user)
-                alert('Registration successfully, Goto login ')
+        return signInWithPopup(auth, provider)
 
-            }).catch((error) => {
-            });
     }
     const createByEmail = (displayName, email, password) => {
         createUserWithEmailAndPassword(auth, email, password)
@@ -47,13 +41,14 @@ const Auth = () => {
             });
     }
 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            setUser(user)
-        } else {
-
-        }
-    });
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUser(user)
+            } else {
+            }
+        });
+    }, [auth])
 
     const signout = () => {
         signOut(auth).then(() => {

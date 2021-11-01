@@ -1,9 +1,6 @@
 import React from 'react';
+import tourestImg from "../media/icon/island.png"
 import { useForm } from '../../../node_modules/react-hook-form/dist/index.cjs';
-import tourestImg from '../media/icon/island.png'
-
-
-
 const AddPlace = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
@@ -15,7 +12,7 @@ const AddPlace = () => {
             ticket: data.ticket,
             date: data.date
         }
-        console.log(data.img)
+
         fetch('https://travnorth.herokuapp.com/places', {
                 method: 'POST',
                 headers: {

@@ -1,18 +1,39 @@
 import { LockClosedIcon } from '@heroicons/react/outline';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
 import Auth from '../Firebase/Auth'
 import { FcGoogle } from 'react-icons/fc';
+import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { UserContext } from '../../../App';
 
 // import { FcGoogle } from  "@react-icons/all-files/fa/FcGoogle";
 
 const Login = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { loginByEmail, googleLogin, user } = Auth()
-console.log(user);
+    const { loginByEmail, googleLogin, setUser } = Auth()
+    const location = useLocation()
+    const history = useHistory()
+    const user = useContext(UserContext)
+    const redirectPath = location.state?.form || '/'
+    user?.uid && history.push('/cart')
+//login with google
+    const handelGoogleLogin = () => {
+        googleLogin()
+            .then((result) => {
+
+                const user = result.user;
+                setUser(user)
+                history.push(redirectPath)
+            }).catch((error) => {
+            });
+    }
+//login form
     const onSubmit = data => {
+        history.push(redirectPath)
+
         loginByEmail(data.email, data.password)
     };
     return (
@@ -73,7 +94,6 @@ console.log(user);
                         <div>
                             <button
                                 type="submit"
-
                                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
@@ -81,10 +101,11 @@ console.log(user);
                                 </span>
                                 Sign in
                             </button>
-                            <button onClick={googleLogin} className='block mx-auto mt-6'>
+                            <button onClick={handelGoogleLogin} className='block mx-auto mt-6'>
                                 <FcGoogle fontSize={'2.5rem'} />
                             </button>
                         </div>
+
                     </form>
                 </div>
             </div>
